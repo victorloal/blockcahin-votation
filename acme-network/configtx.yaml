@@ -1,0 +1,245 @@
+
+    ################################################################################
+    #   Section: Organizations
+    ################################################################################
+    Organizations:
+        - &Org1
+            Name: Org1MSP
+            ID: Org1MSP
+            MSPDir: crypto-config/org1.acme.com/msp
+            Policies:
+                Readers:
+                    Type: Signature
+                    Rule: "OR('Org1MSP.admin', 'Org1MSP.peer', 'Org1MSP.client', 'Org1MSP.orderer')"
+                Writers:
+                    Type: Signature
+                    Rule: "OR('Org1MSP.admin', 'Org1MSP.client', 'Org1MSP.orderer')"
+                Admins:
+                    Type: Signature
+                    Rule: "OR('Org1MSP.admin')"
+                Orderer:
+                    Type: Signature
+                    Rule: "OR('Org1MSP.orderer')"
+                Endorsement:
+                    Type: Signature
+                    Rule: "OR('Org1MSP.peer')"
+            ## no esta en el original
+            AnchorPeers:
+                - Host: peer0.org1.acme.com
+                  Port: 7051
+            OrdererEndpoints:
+                - orderer.org1.acme.com:7050
+
+        - &Org2
+            Name: Org2MSP
+            ID: Org2MSP
+            MSPDir: crypto-config/org2.acme.com/msp
+            Policies:
+                Readers:
+                    Type: Signature
+                    Rule: "OR('Org2MSP.admin', 'Org2MSP.peer', 'Org2MSP.client', 'Org2MSP.orderer')"
+                Writers:
+                    Type: Signature
+                    Rule: "OR('Org2MSP.admin', 'Org2MSP.client', 'Org2MSP.orderer')"
+                Admins:
+                    Type: Signature
+                    Rule: "OR('Org2MSP.admin')"
+                Orderer:
+                    Type: Signature
+                    Rule: "OR('Org2MSP.orderer')"
+                Endorsement:
+                    Type: Signature
+                    Rule: "OR('Org2MSP.peer')"
+            ## no esta en el original
+            AnchorPeers:
+                - Host: peer0.org2.acme.com
+                  Port: 7051
+            OrdererEndpoints:
+                - orderer.org2.acme.com:7050
+
+        - &Org3
+            Name: Org3MSP
+            ID: Org3MSP
+            MSPDir: crypto-config/org3.acme.com/msp
+            Policies:
+                Readers:
+                    Type: Signature
+                    Rule: "OR('Org3MSP.admin', 'Org3MSP.peer', 'Org3MSP.client', 'Org3MSP.orderer')"
+                Writers:
+                    Type: Signature
+                    Rule: "OR('Org3MSP.admin', 'Org3MSP.client', 'Org3MSP.orderer')"
+                Admins:
+                    Type: Signature
+                    Rule: "OR('Org3MSP.admin')"
+                Orderer:
+                    Type: Signature
+                    Rule: "OR('Org3MSP.orderer')"
+                Endorsement:
+                    Type: Signature
+                    Rule: "OR('Org3MSP.peer')"
+            ## no esta en el original
+            AnchorPeers:
+                - Host: peer0.org3.acme.com
+                  Port: 7051
+            OrdererEndpoints:
+                - orderer.org3.acme.com:7050
+    ################################################################################
+    #   SECTION: Capabilities
+    ################################################################################
+    Capabilities:
+        Channel: &ChannelCapabilities
+            V2_0: true
+
+        Orderer: &OrdererCapabilities
+            V2_0: true
+
+        Application: &ApplicationCapabilities
+            V2_0: true
+
+    ################################################################################
+    #   SECTION: Application
+    ################################################################################
+    Application: &ApplicationDefaults
+
+        # Organizations is the list of orgs which are defined as participants on
+        # the application side of the network
+        Organizations:
+
+        # Policies defines the set of policies at this level of the config tree
+        # For Application policies, their canonical path is
+        #   /Channel/Application/<PolicyName>
+        Policies:
+            Readers:
+                Type: ImplicitMeta
+                Rule: "ANY Readers"
+            Writers:
+                Type: ImplicitMeta
+                Rule: "ANY Writers"
+            Admins:
+                Type: ImplicitMeta
+                Rule: "MAJORITY Admins"
+            LifecycleEndorsement:
+                Type: ImplicitMeta
+                Rule: "ALL Endorsement"
+            Endorsement:
+                Type: ImplicitMeta
+                Rule: "MAJORITY Endorsement"
+
+        Capabilities:
+            <<: *ApplicationCapabilities
+
+    ################################################################################
+    #   SECTION: Orderer
+    ################################################################################
+    Orderer: &OrdererDefaults
+        OrdererType: etcdraft
+        EtcdRaft:
+            Consenters:
+            - Host: orderer.org1.acme.com
+              Port: 7050
+              ClientTLSCert: crypto-config/org1.acme.com/orderers/orderer.org1.acme.com/tls/server.crt
+              ServerTLSCert: crypto-config/org1.acme.com/orderers/orderer.org1.acme.com/tls/server.crt
+            - Host: orderer.org2.acme.com
+              Port: 7050
+              ClientTLSCert: crypto-config/org2.acme.com/orderers/orderer.org2.acme.com/tls/server.crt
+              ServerTLSCert: crypto-config/org2.acme.com/orderers/orderer.org2.acme.com/tls/server.crt
+            - Host: orderer.org3.acme.com
+              Port: 7050
+              ClientTLSCert: crypto-config/org3.acme.com/orderers/orderer.org3.acme.com/tls/server.crt
+              ServerTLSCert: crypto-config/org3.acme.com/orderers/orderer.org3.acme.com/tls/server.crt
+        Addresses:
+            # - orderer.org1.acme.com:7050
+            # - orderer.org1.acme.com:7050
+            # - orderer.org2.acme.com:7050
+            # - orderer.org3.acme.com:7050
+        BatchTimeout: 2s
+        BatchSize:
+            MaxMessageCount: 500
+            AbsoluteMaxBytes: 99 MB
+            PreferredMaxBytes: 2 MB
+        Organizations:
+        Policies:
+            Readers:
+                Type: ImplicitMeta
+                Rule: "ANY Readers"
+            Writers:
+                Type: ImplicitMeta
+                Rule: "ANY Writers"
+            Admins:
+                Type: ImplicitMeta
+                Rule: "MAJORITY Admins"
+            # BlockValidation specifies what signatures must be included in the block
+            # from the orderer for the peer to validate it.
+            BlockValidation:
+                Type: ImplicitMeta
+                Rule: "ANY Orderers"
+                # Rule: "ANY Writers"
+
+    ################################################################################
+    #
+    #   CHANNEL
+    #
+    #   This section defines the values to encode into a config transaction or
+    #   genesis block for channel related parameters.
+    #
+    ################################################################################
+    Channel: &ChannelDefaults
+        # Policies defines the set of policies at this level of the config tree
+        # For Channel policies, their canonical path is
+        #   /Channel/<PolicyName>
+        Policies:
+            # Who may invoke the 'Deliver' API
+            Readers:
+                Type: ImplicitMeta
+                Rule: "ANY Readers"
+            # Who may invoke the 'Broadcast' API
+            Writers:
+                Type: ImplicitMeta
+                Rule: "ANY Writers"
+            # By default, who may modify elements at this config level
+            Admins:
+                Type: ImplicitMeta
+                Rule: "MAJORITY Admins"
+
+        # Capabilities describes the channel level capabilities, see the
+        # dedicated Capabilities section elsewhere in this file for a full
+        # description
+        Capabilities:
+            <<: *ChannelCapabilities
+
+    ################################################################################
+    #   Profile
+    ################################################################################
+    Profiles:
+        ThreeOrgsOrdererGenesis:
+            <<: *ChannelDefaults
+            Orderer:
+                <<: *OrdererDefaults
+                Organizations:
+                    - *Org1
+                    - *Org2
+                    - *Org3
+                Capabilities:
+                    <<: *OrdererCapabilities
+            Consortiums:
+                SampleConsortium:
+                    Organizations:
+                        - *Org1
+                        - *Org2
+                        - *Org3
+        ThreeOrgsChannel:
+            consortium: SampleConsortium
+            <<: *ChannelDefaults
+            Application:
+                <<: *ApplicationDefaults
+                Organizations:
+                    - *Org1
+                    - *Org2
+                    - *Org3
+                Capabilities:
+                    <<: *ApplicationCapabilities
+
+
+            
+        
+

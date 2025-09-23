@@ -1,0 +1,90 @@
+#Este archivo define servicios de autoridad de certificación intermedia (CA) para cada organización en la red. 
+#Cada CA se ejecuta en un contenedor de Docker y se configura para emitir certificados para la organización que representa. 
+#Cada CA se configura para confiar en la CA raíz de la red y en las CA intermedias de otras organizaciones.
+
+version: '3.7'
+
+networks:
+  basic:
+services:
+  int.ca.org1.acme.com:
+    image: hyperledger/fabric-ca:latest
+    container_name: int.ca.org1.acme.com
+    ports:
+      - "7056:7054"
+    volumes:
+      - ./crypto-config/org1.acme.com/int:/etc/hyperledger/fabric-ca-server
+    command: >
+      sh -c "fabric-ca-server start -b admin:adminpw -u http://int.ca.org1.acme.com:password@root.ca.org1.acme.com:7054"
+    environment:
+      - FABRIC_CA_SERVER_ENABLED=true
+    networks:
+      - basic
+
+  tls.int.ca.org1.acme.com:
+    image: hyperledger/fabric-ca:latest
+    container_name: tls.int.ca.org1.acme.com
+    ports:
+      - "7057:7054"
+    volumes:
+      - ./crypto-config/org1.acme.com/tls-int:/etc/hyperledger/fabric-ca-server
+    command: >
+      sh -c "fabric-ca-server start -b admin:adminpw -u http://tls.int.ca.org1.acme.com:password@tls.root.ca.org1.acme.com:7054"
+    networks:
+      - basic
+
+
+  int.ca.org2.acme.com:
+    image: hyperledger/fabric-ca:latest
+    container_name: int.ca.org2.acme.com
+    ports:
+      - "8056:7054"
+    volumes:
+      - ./crypto-config/org2.acme.com/int:/etc/hyperledger/fabric-ca-server
+    command: >
+      sh -c "fabric-ca-server start -b admin:adminpw -u http://int.ca.org2.acme.com:password@root.ca.org2.acme.com:7054"
+    environment:
+      - FABRIC_CA_SERVER_ENABLED=true
+    networks:
+      - basic
+
+  tls.int.ca.org2.acme.com:
+    image: hyperledger/fabric-ca:latest
+    container_name: tls.int.ca.org2.acme.com
+    ports:
+      - "8057:7054"
+    volumes:
+      - ./crypto-config/org2.acme.com/tls-int:/etc/hyperledger/fabric-ca-server
+    command: >
+      sh -c "fabric-ca-server start -b admin:adminpw -u http://tls.int.ca.org2.acme.com:password@tls.root.ca.org2.acme.com:7054"
+    networks:
+      - basic
+
+
+      
+  int.ca.org3.acme.com:
+    image: hyperledger/fabric-ca:latest
+    container_name: int.ca.org3.acme.com
+    ports:
+      - "9056:7054"
+    volumes:
+      - ./crypto-config/org3.acme.com/int:/etc/hyperledger/fabric-ca-server
+    command: >
+      sh -c "fabric-ca-server start -b admin:adminpw -u http://int.ca.org3.acme.com:password@root.ca.org3.acme.com:7054"
+    environment:
+      - FABRIC_CA_SERVER_ENABLED=true
+    networks:
+      - basic
+
+  tls.int.ca.org3.acme.com:
+    image: hyperledger/fabric-ca:latest
+    container_name: tls.int.ca.org3.acme.com
+    ports:
+      - "9057:7054"
+    volumes:
+      - ./crypto-config/org3.acme.com/tls-int:/etc/hyperledger/fabric-ca-server
+    command: >
+      sh -c "fabric-ca-server start -b admin:adminpw -u http://tls.int.ca.org3.acme.com:password@tls.root.ca.org3.acme.com:7054"
+    networks:
+      - basic
+
