@@ -172,7 +172,7 @@
             # from the orderer for the peer to validate it.
             BlockValidation:
                 Type: ImplicitMeta
-                Rule: "ANY Orderers"
+                Rule: "ANY Writers"
                 # Rule: "ANY Writers"
 
     ################################################################################
