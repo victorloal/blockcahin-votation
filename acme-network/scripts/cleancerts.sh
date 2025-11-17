@@ -1,31 +1,39 @@
 # Este script limpia los certificados generados por la red de Hyperledger Fabric, y los archivos generados por la red de Hyperledger Fabric.
 
 set -e
+
+function safe_rm() {
+    sudo rm -rf "$1" 2>/dev/null || true
+}
+
+
 function cleanCA(){
     org=$1
     ca=$2
 
     CA_PATH=../crypto-config/$org/$ca
-    sudo rm -r $CA_PATH/clients
-    sudo rm -r $CA_PATH/msp
-    sudo rm $CA_PATH/ca-cert.pem
-    sudo rm $CA_PATH/fabric-ca-server.db
-    sudo rm $CA_PATH/IssuerPublicKey
-    sudo rm $CA_PATH/IssuerRevocationPublicKey
+    safe_rm $CA_PATH/clients
+    safe_rm $CA_PATH/msp
+    safe_rm $CA_PATH/ca-cert.pem
+    safe_rm $CA_PATH/fabric-ca-server.db
+    safe_rm $CA_PATH/IssuerPublicKey
+    safe_rm $CA_PATH/IssuerRevocationPublicKey
     CA_CHAIN_FILE=$CA_PATH/ca-chain.pem
     if test -f "$CA_CHAIN_FILE"; then
-        sudo rm $CA_CHAIN_FILE
+        safe_rm $CA_CHAIN_FILE
     fi
 }
+
+    
 
 function cleanOrgMSP() {
     org=$1
 
     MSP_PATH=../crypto-config/$org/msp
-    sudo rm -r $MSP_PATH/cacerts
-    sudo rm -r $MSP_PATH/intermediatecerts
-    sudo rm -r $MSP_PATH/tlscacerts
-    sudo rm -r $MSP_PATH/tlsintermediatecerts
+    safe_rm $MSP_PATH/cacerts
+    safe_rm $MSP_PATH/intermediatecerts
+    safe_rm $MSP_PATH/tlscacerts
+    safe_rm $MSP_PATH/tlsintermediatecerts
 }
 
 function cleanLocalMSP() {
@@ -36,8 +44,8 @@ function cleanLocalMSP() {
     LOCAL_MSP_PATH=../crypto-config/$org/${type}s/$name/msp
     TLS_FOLDER_PATH=../crypto-config/$org/${type}s/$name/tls
 
-    sudo rm -r $LOCAL_MSP_PATH
-    sudo rm -r $TLS_FOLDER_PATH
+    safe_rm $LOCAL_MSP_PATH
+    safe_rm $TLS_FOLDER_PATH
 }
 
 #cleanCA acme.com root

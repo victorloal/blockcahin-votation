@@ -2,7 +2,7 @@
 #Cada organización tiene un servicio de CA raíz y un servicio de CA TLS.
 #El servicio de CA raíz se utiliza para registrar y emitir certificados para los administradores de la organización.
 
-version: "2"
+version: '3.7'
 
 networks:
   basic:
