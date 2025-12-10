@@ -2,7 +2,7 @@
 #y para actualizar la configuración del canal respectivamente. 
 #Se realiza para cada organización en la red. 
 
-set -e
+set -x
 function joinChannel() {
   org=$1
   mspID=$2

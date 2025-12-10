@@ -3,7 +3,7 @@
 #estableciendo CA raíz y TLS, y registrando CAs intermedios. 
 #Automatiza el enroll de identidades administrativas y el registro de nuevas CAs intermedias. 
 
-set -e
+set -x
 
 
 # UDENAR

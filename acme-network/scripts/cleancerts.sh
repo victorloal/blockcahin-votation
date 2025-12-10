@@ -1,6 +1,6 @@
 # Este script limpia los certificados generados por la red de Hyperledger Fabric, y los archivos generados por la red de Hyperledger Fabric.
 
-set -e
+set -x
 
 function safe_rm() {
     sudo rm -rf "$1" 2>/dev/null || true

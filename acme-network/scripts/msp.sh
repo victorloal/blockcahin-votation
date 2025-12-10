@@ -1,7 +1,7 @@
 #crea estructuras de MSP (Membership Service Provider) para canales y locales en Hyperledger Fabric. 
 #Las funciones createChannelMSP y createLocalMSP generan directorios y copian certificados para MSPs de canales y locales respectivamente, 
 #mientras que createTLSFolder prepara carpetas para TLS.
-
+set -x
 
 function createChannelMSP() {
     org=$1

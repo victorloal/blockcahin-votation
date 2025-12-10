@@ -34,7 +34,7 @@ type Votacion struct {
 }
 
 type Voters struct {
-	idVoters  []string `json:"Votantes"`
+	Votantes  []string `json:"Votantes"`
 }
 
 // Nuevas estructuras para validación

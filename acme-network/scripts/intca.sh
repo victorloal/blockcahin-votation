@@ -2,7 +2,7 @@
 #Este script automatiza la configuración de Autoridades de Certificación intermedias y sus equivalentes TLS para varias organizaciones en Hyperledger Fabric. 
 #Para cada entidad, inscribe identidades iniciales para CA intermedias y TLS, utilizando credenciales predefinidas y comunicándose con las CA raíz.
 
-set -e
+set -x
 # UDENAR
 export CSR_NAMES_UDENAR="C=CO,ST=Nariño,L=Pasto,O=org1,OU=Hyperledger Fabric"
 # Enroll bootstrap identity of int CA

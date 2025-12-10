@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 	"github.com/hyperledger/fabric-chaincode-go/pkg/cid"
+	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
 type VotacionContract struct {
@@ -175,7 +175,7 @@ func (s *VotacionContract) EliminarCandidato(ctx contractapi.TransactionContextI
 //Cambiar la forma de enviar voto
 
 
-func (s *VotacionContract) Votar(ctx contractapi.TransactionContextInterface, uiVotacion string, voto interface{}) error {
+func (s *VotacionContract) Votar(ctx contractapi.TransactionContextInterface, uiVotacion string,idVotante string, voto interface{}) error {
 
     var votos []string
 
@@ -212,11 +212,39 @@ func (s *VotacionContract) Votar(ctx contractapi.TransactionContextInterface, ui
 		return err
 	}
 
-
-	// Validar si el usuario puede votar
-	if err := ValidateVoterCanVote(ctx, uiVotacion); err != nil {
+	// Obtener la lista de votantes
+	votantes, err := s.ObtenerVotantes(ctx,uiVotacion)
+	
+	if err := ValidateVotationStarted(votacion); err != nil {
 		return err
 	}
+	aux :=false
+	// Verificar si el votante ya está en la lista
+	for _, existingID := range votantes.Votantes {
+		if existingID == idVotante {
+			aux = true
+		}
+	}
+
+	if !aux {
+		return ValidationError{
+				Field:   "Vote",
+				Message: "el votante no esta registrado para esta votación",
+				Code:    "DUPLICATE_VOTER",
+			}
+	}
+
+	votos2, err := s.ObtenerListaVotos(ctx,uiVotacion)
+	for _, existingID := range votos2 {
+		if existingID.Votante == idVotante {
+			return ValidationError{
+				Field:   "Vote",
+				Message: "el votante ya registro su voto en esta votación",
+				Code:    "DUPLICATE_VOTER",
+			}
+		}
+	}
+
 
 	//Validar largo del string voto
 	if err := ValidateVotationStarted(votacion); err != nil {
@@ -243,16 +271,8 @@ func (s *VotacionContract) Votar(ctx contractapi.TransactionContextInterface, ui
     }
     
 	// Obterner el nombre del votante desde los atributos del certificado
-	votante := cert.Subject.CommonName
+	
 
-	idVotante, err := cid.GetID(ctx.GetStub())
-	if err != nil {
-		return ValidationError{
-			Field:   "Votante",
-			Message: fmt.Sprintf("error obteniendo el ID del votante: %v", err),
-			Code:    "VOTANTE_ID_ERROR",
-		}
-	}
 
 	// Validar votante único
 	if voto, _ := ObtenerVoto(ctx, uiVotacion, idVotante); voto != nil {
@@ -281,9 +301,14 @@ func (s *VotacionContract) Votar(ctx contractapi.TransactionContextInterface, ui
 	votoStruct := Voto{
 		Fecha:   time.Now().Format("2006-01-02 15:04:05"),
 		Voto:    votos,
-		Votante: votante,
+		Votante: idVotante,
 	}
 	compositeKey , err := ctx.GetStub().CreateCompositeKey("VOTO", []string{uiVotacion, idVotante})
+
+	if err != nil {
+		return err
+	}
+
 
 	votoJSON, err := json.Marshal(votoStruct)
 	if err != nil {
@@ -333,10 +358,6 @@ func (s *VotacionContract) AgregarVotante(ctx contractapi.TransactionContextInte
 		return err
 	}
 	
-	//Validar idVotante
-	if err := ValidateVoterID(idVotante); err != nil {
-		return err
-	}
 
 	// Obtener la lista de votantes existente
 	votersJSON, err := ctx.GetStub().GetState("VOTANTES_" + uiVotacion)
@@ -352,12 +373,12 @@ func (s *VotacionContract) AgregarVotante(ctx contractapi.TransactionContextInte
 		}
 	} else {
 		voters = Voters{
-			idVoters: []string{},
+			Votantes: []string{},
 		}
 	}
 
 	// Verificar si el votante ya está en la lista
-	for _, existingID := range voters.idVoters {
+	for _, existingID := range voters.Votantes {
 		if existingID == idVotante {
 			return ValidationError{
 				Field:   "Votante",
@@ -368,7 +389,7 @@ func (s *VotacionContract) AgregarVotante(ctx contractapi.TransactionContextInte
 	}
 
 	// Agregar el nuevo votante a la lista
-	voters.idVoters = append(voters.idVoters, idVotante)
+	voters.Votantes = append(voters.Votantes, idVotante)
 
 	// Serializar y guardar la lista actualizada de votantes
 	updatedVotersJSON, err := json.Marshal(voters)
@@ -477,6 +498,27 @@ func (s *VotacionContract) ObtenerCandidatos(ctx contractapi.TransactionContextI
 	}
 
 	return &candidatos, nil
+}
+
+
+//obtener la lista de votantes
+func (s *VotacionContract) ObtenerVotantes(ctx contractapi.TransactionContextInterface, uiVotacion string) (*Voters, error) {
+	votersJSON, err := ctx.GetStub().GetState("VOTANTES_" + uiVotacion)
+	if err != nil {
+		return nil, fmt.Errorf("error obteniendo los votantes: %v", err)
+	}
+	if votersJSON == nil {
+		return &Voters{
+			Votantes: []string{},
+		}, nil
+	}
+	var voters Voters
+	err = json.Unmarshal(votersJSON, &voters)
+	if err != nil {
+		return nil, fmt.Errorf("error deserializando la lista de votantes: %v", err)
+	}
+
+	return &voters, nil
 }
 
 //Obtener una votación

@@ -6,7 +6,6 @@ import (
 	"strings"
 	"time"
 	"unicode/utf8"
-
 )
 
 // Constantes de validación
@@ -170,38 +169,3 @@ func ValidateCandidato(uiCandidato string, candidatosExistentes *CandidatosVotac
 	return nil
 }
 
-// Validar si el votante ya ha votado y si está registrado
-func ValidateVoterCanVote(uiVotante string, votacion *Votacion, votosExistentes *VotosVotacion) error {
-	if err := ValidateUI(uiVotante); err != nil {
-		return err
-	}
-
-	// Validar que el votante esté registrado en la votación
-	isRegistered := false
-	for _, votante := range votacion.Votantes.Votantes {
-		if votante.UI == uiVotante {
-			isRegistered = true
-			break
-		}
-	}
-	if !isRegistered {
-		return ValidationError{
-			Field:   "UI",
-			Message: "el votante no está registrado en esta votación",
-			Code:    "VOTER_NOT_REGISTERED",
-		}
-	}
-
-	// Validar que el votante no haya votado ya
-	for _, voto := range votosExistentes.Votos {
-		if voto.UIVotante == uiVotante {
-			return ValidationError{
-				Field:   "UI",
-				Message: "el votante ya ha emitido su voto en esta votación",
-				Code:    "VOTER_ALREADY_VOTED",
-			}
-		}
-	}
-
-	return nil
-}

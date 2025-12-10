@@ -2,7 +2,7 @@
 #Se define para distintas entidades (admins, clientes, peers, orderers) y maneja tanto certificados regulares como TLS. 
 #Utiliza funciones para registrar y matricular con parámetros como nombres de organización y tipos de identidad.
 #!/bin/bash
-set -e
+set -x
 
 function issueCertificates() {
     ca=$1

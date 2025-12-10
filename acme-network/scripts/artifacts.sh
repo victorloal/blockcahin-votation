@@ -3,7 +3,7 @@
 #luego llama a la función generateAnchorConfigurationTx para cada MSP, generando archivos de anclaje para cada uno. 
 #También verifica la disponibilidad de configtxgen.
 
-set -e
+set -x
 function generateAnchorConfigurationTx() {
     msp=$1
     configtxgen -outputAnchorPeersUpdate ../channel-artifacts/${msp}anchors.tx -profile ThreeOrgsChannel -asOrg $msp -channelID marketplace

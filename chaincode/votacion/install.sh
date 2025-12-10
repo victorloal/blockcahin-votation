@@ -28,7 +28,7 @@ peer lifecycle chaincode install ${CHAINCODE_NAME}.tar.gz
 
 
 
-export CC_PACKAGEID=01c0386b641e0abab2f425a047c2d3a3dc3ebe0df88cfefaabe4cad8fdf9c952
+export CC_PACKAGEID=fd491f1ec845e41ffc93039c3e6631abaaba1c3d050273a6ddbc66b2260b4796
 
 
 
@@ -158,33 +158,48 @@ export CLI_TIMEOUT=10
 
 # InitLedger
 export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
-peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["NuevaVotacion","0000000003","prueba3","2025-11-19T15:54:49.000Z","2025-11-19T15:55:49.000Z"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
+peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["NuevaVotacion","0000000003","prueba3","2025-12-09T09:45:26.144Z","2025-12-10T09:45:13.000Z"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
 
 
+#AgregarVotante
+export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
+peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["AgregarVotante","0000000003","v0000000003"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
+
+#AgregarVotante
+export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
+peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["AgregarVotante","0000000003","v0000000002"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
+
+#AgregarVotante
+export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
+peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["AgregarVotante","0000000003","v0000000003"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
+
+#ListaVotantes
+export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
+peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["ObtenerVotantes","0000000003"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
 
 #AgregarCandidato
 export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
-peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["AgregarCandidato","0000000001","c0000000001"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
+peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["AgregarCandidato","0000000003","c0000000001"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
 
 #AgregarCandidato
 export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
-peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["AgregarCandidato","0000000001","c0000000002"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
+peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["AgregarCandidato","0000000003","c0000000002"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
 
 #AgregarCandidato
 export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
-peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["AgregarCandidato","0000000001","c0000000003"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
+peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["AgregarCandidato","0000000003","c0000000003"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
 
 #AgregarCandidato
 export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
-peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["AgregarCandidato","0000000001","c0000000004"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
+peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["AgregarCandidato","0000000003","c0000000004"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
 
 #EliminarCandidato
 export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
-peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["EliminarCandidato","0000000001","c0000000002"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
+peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["EliminarCandidato","0000000003","c0000000002"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
 
 #Votar
 export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
-peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["Votar","0000000001","[\"0\",\"1\",\"0\"]"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
+peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["Votar","0000000003","[\"0\",\"1\",\"0\"]"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
 
 export ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org2.acme.com/orderers/orderer.org2.acme.com/tls/ca.crt
 export ORDERER_ADDRESS=orderer.org2.acme.com:7050
@@ -193,9 +208,12 @@ export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric
 export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org2.acme.com/users/admin@org2.acme.com/msp
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org2.acme.com/users/admin@org2.acme.com/msp CORE_PEER_LOCALMSPID="Org2MSP"
 CONTENT=$(cat ../../../chaincode/votacion/encrypted_numbers.json | tr -d '\n')
+export ARG_JSON='[\"0\",\"1\",\"0\"]'
 #Votar
 export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org2.acme.com/peers/peer0.org2.acme.com/tls/ca.crt
-peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c "{\"Args\":[\"Votar\",\"0000000001\",\"$CONTENT\"]}" --peerAddresses peer0.org2.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org2.acme.com/peers/peer0.org2.acme.com/tls/ca.crt
+peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c "{\"Args\":[\"Votar\",\"0000000003\",\"v0000000003\",\"$ARG_JSON\"]}" --peerAddresses peer0.org2.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org2.acme.com/peers/peer0.org2.acme.com/tls/ca.crt
+
+
 
 export ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org3.acme.com/orderers/orderer.org3.acme.com/tls/ca.crt
 export ORDERER_ADDRESS=orderer.org3.acme.com:7050
@@ -206,7 +224,7 @@ CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypt
 
 #Votar
 export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org3.acme.com/peers/peer0.org3.acme.com/tls/ca.crt
-peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["Votar","0000000001","[\"0\",\"0\",\"1\"]"]}' --peerAddresses peer0.org3.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org3.acme.com/peers/peer0.org3.acme.com/tls/ca.crt
+peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["Votar","0000000003","[\"0\",\"0\",\"1\"]"]}' --peerAddresses peer0.org3.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org3.acme.com/peers/peer0.org3.acme.com/tls/ca.crt
 
 #RegistrarResultados
 export ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/orderers/orderer.org1.acme.com/tls/ca.crt
@@ -226,14 +244,14 @@ export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric
 export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/users/admin@org1.acme.com/msp
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/users/admin@org1.acme.com/msp CORE_PEER_LOCALMSPID="Org1MSP"
 export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt 
-peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["ObtenerListaVotos","0000000001"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
+peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["ObtenerListaVotos","0000000003"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
 
 # ObtenerCandidatos
-peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["obtenerCandidatos","0000000001"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
+peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["obtenerCandidatos","0000000003"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
 
 
 # ObtenerVotacion
-peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["ObtenerVotacion","0000000001"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
+peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["ObtenerVotacion","0000000003"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
 
 # ObtenerResultados
-peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["ObtenerResultados","0000000001"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt
+peer chaincode invoke -o $ORDERER_ADDRESS --tls --cafile $ORDERER_CA -C  $CHANNEL_NAME  -n $CHAINCODE_NAME -c '{"Args":["ObtenerResultados","0000000003"]}' --peerAddresses peer0.org1.acme.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/org1.acme.com/peers/peer0.org1.acme.com/tls/ca.crt

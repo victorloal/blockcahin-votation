@@ -1,6 +1,6 @@
 #Este script baja la red de Hyperledger Fabric
 
-set -e
+set -x
 
 function safe_rm() {
     sudo rm -rf "$1" 2>/dev/null || true
